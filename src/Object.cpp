@@ -17,15 +17,15 @@ License    : BSD License,
 
 Object::Object(const QVector3D& size,
                const QVector3D& position,
-               int rotationDirection,
-               const QVector3D& rotation) : m_position(position), m_size(size)
+               int rotationAngle,
+               const QVector3D& rotation) : m_position(position), m_size(size), m_rotationAngle(rotationAngle)
 {
     // Model transformation
     this->m_modelMatrix.setToIdentity();
 
     // The camera is quite far away, so make the cube large for testing.
     this->m_modelMatrix.translate(m_position);
-    this->m_modelMatrix.rotate(rotationDirection, rotation);
+    this->m_modelMatrix.rotate(m_rotationAngle, rotation);
     this->m_modelMatrix.scale(m_size);
 
     // Create Vertex Array Object

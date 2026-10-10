@@ -46,16 +46,14 @@ SceneView::SceneView() :
     m_camera.rotate(-40, QVector3D(0.0f, 1.0f, 0.0f));
 
     connect(&m_timer, &QTimer::timeout, this, [this]() {
-        // float m_rotationAngle += 1.0f; // increase angle (in degrees)
-        // if (m_rotationAngle >= 360.f) m_rotationAngle -= 360.f;
-
-        // m_modelMatrix.setToIdentity();
-        // m_modelMatrix.rotate(m_rotationAngle, QVector3D(0.f, 1.f, 0.f));
         m_Drone->startPropellers();
-
         renderLater();
     });
 
+    connect(&m_timer_2, &QTimer::timeout, this, [this]() {
+        m_Drone->moveDrone();
+        renderLater();
+    });
 }
 
 SceneView::~SceneView() {
@@ -169,7 +167,6 @@ void SceneView::paintGL() {
         m_Drone->drawElement(i);
     }
 
-
     SHADER(1)->release();
 
 	m_gpuTimers.recordSample(); // done painting
@@ -192,8 +189,6 @@ void SceneView::paintGL() {
 
 	qint64 elapsedMs = m_cpuTimer.elapsed();
     qDebug() << "Total paintGL time: " << elapsedMs << "ms\n";
-
-    // startDrone(true);
 }
 
 
@@ -312,15 +307,17 @@ void SceneView::updateWorld2ViewMatrix() {
 }
 
 
-void SceneView::startDrone(bool connection){
-    if(connection){
+void SceneView::startParaller(bool connection){
+    if(connection)
         if (!m_timer.isActive())
-        {
-
-
-
-        m_timer.start(16);
-        }
-    }
+            m_timer.start(0.5);
     else m_timer.stop();
+}
+
+void SceneView::startDrone(bool connection){
+    startParaller(connection);
+    if(connection)
+        if (!m_timer_2.isActive())
+            m_timer_2.start(16);
+        else m_timer_2.stop();
 }

@@ -29,6 +29,9 @@ public:
 	SceneView();
 	virtual ~SceneView() override;
 
+     void startDrone(bool connection);
+    void startParaller(bool connection);
+
 protected:
 	void initializeGL() override;
 	void resizeGL(int width, int height) override;
@@ -43,11 +46,10 @@ protected:
 	void wheelEvent(QWheelEvent *event) override;
 
 
-    void startDrone(bool connection);
-
 private:
 
-        QTimer                      m_timer;
+    QTimer                      m_timer;
+    QTimer                      m_timer_2;
 	/*! Tests, if any relevant input was received and registers a state change. */
 	void checkInput();
 

@@ -2,7 +2,7 @@
 #define DRONE_H
 
 #include <QMatrix4x4>
-#include <vector>
+#include <unordered_map>
 #include <iterator>
 
 #include "inc/Object.h"
@@ -25,7 +25,7 @@ public:
     void moveDrone();
 
 private:
-    std::unordered_map<std::string, std::unique_ptr<Object>>          m_objects;
+    std::unordered_multimap<std::string, std::unique_ptr<Object>>         m_objects;
 };
 
 #endif // DRONE_H

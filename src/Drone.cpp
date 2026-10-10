@@ -124,7 +124,6 @@ Drone::Drone() {
                                  QVector3D(0.0f, 1.0f, 0.0f)
                                  )
         );
-
 }
 
 bool Drone::setShaders(QOpenGLShaderProgram *shaderProgramm){
@@ -164,5 +163,6 @@ void Drone::startPropellers() {
 }
 
 void Drone::moveDrone(){
-    // m_objects.first->translateObject();
+    for(auto& object : m_objects)
+        object.second->translateObject();
 }

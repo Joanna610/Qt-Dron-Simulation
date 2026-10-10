@@ -33,6 +33,7 @@ private:
 
     QVector3D                   m_position;
     QVector3D                   m_size;
+    float                       m_rotationAngle = 0.0f;
 
     QOpenGLVertexArrayObject    m_vao;
 
@@ -42,7 +43,7 @@ private:
 
     QMatrix4x4                  m_modelMatrix;
 
-    float                       m_rotationAngle = 0.0f;
+
     int                         m_amountOfVertices = 0;
 };
 

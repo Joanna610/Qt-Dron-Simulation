@@ -17,7 +17,7 @@ License    : BSD License,
 
 GridObject::GridObject() {
     const unsigned int N = 20;
-    float width = 600;
+    float width = 1000;
     std::vector<float>  gridVertexBufferData;
 
     m_bufferSize = 2*N*2*2;

@@ -64,7 +64,15 @@ TestDialog::TestDialog() :
     QPushButton * closeBtn = new QPushButton(tr("Close"), this);
     connect(closeBtn, &QPushButton::clicked, this, &QDialog::accept);
 
+    QPushButton * startBtn = new QPushButton(tr("Start Drone"), this);
+    connect(startBtn, &QPushButton::clicked, this, [this]() {
+        m_sceneView->startDrone(true);
+    });
+
+
+    hlay->addWidget(startBtn);
     hlay->addWidget(closeBtn);
+
     hlay->setStretch(0,1);
 
     vlay->addLayout(hlay);
