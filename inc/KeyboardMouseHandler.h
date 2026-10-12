@@ -67,7 +67,7 @@ class QWheelEvent;
 class KeyboardMouseHandler {
 public:
 	KeyboardMouseHandler();
-	virtual ~KeyboardMouseHandler();
+    virtual ~KeyboardMouseHandler() = default;
 
 	/*! Call this function for each key we are listening to. */
 	void addRecognizedKey(Qt::Key k);

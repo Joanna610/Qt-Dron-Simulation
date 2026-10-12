@@ -22,7 +22,12 @@ public:
     std::vector<Matrices> setMatrices(const QMatrix4x4& worldToView) const;
     void drawElement(const int & index) const;
     void startPropellers();
-    void moveDrone();
+    void moveForward();
+    void moveBackward();
+    void moveRight();
+    void moveLeft();
+    void moveUp();
+    void moveDown();
 
 private:
     std::unordered_multimap<std::string, std::unique_ptr<Object>>         m_objects;

@@ -29,7 +29,6 @@ public:
 	SceneView();
 	virtual ~SceneView() override;
 
-     void startDrone(bool connection);
     void startParaller(bool connection);
 
 protected:

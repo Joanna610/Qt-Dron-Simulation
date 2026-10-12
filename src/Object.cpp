@@ -277,20 +277,20 @@ void Object::rotateObject(){
     m_modelMatrix.rotate(
         m_rotationAngle,
         QVector3D(0.0f, 1.0f, 0.0f)
-        );
+    );
     m_modelMatrix.scale(m_size);
 }
 
 
-void Object::translateObject(){
+void Object::translateObject(const float& x, const float& y, const float& z){
 
-    m_position += QVector3D(0.0f, 1.0f, 0.0f);
+    m_position += QVector3D(x, y, z);
     m_modelMatrix.setToIdentity();
     m_modelMatrix.translate(m_position);
     m_modelMatrix.rotate(
         m_rotationAngle,
         QVector3D(0.0f, 1.0f, 0.0f)
-        );
+    );
     m_modelMatrix.scale(m_size);
 }
 

@@ -45,13 +45,17 @@ SceneView::SceneView() :
 	// look slightly left
     m_camera.rotate(-40, QVector3D(0.0f, 1.0f, 0.0f));
 
+    // Initializing keyboard
+    m_keyboardMouseHandler.addRecognizedKey(Qt::Key_Up);
+    m_keyboardMouseHandler.addRecognizedKey(Qt::Key_Down);
+    m_keyboardMouseHandler.addRecognizedKey(Qt::Key_Right);
+    m_keyboardMouseHandler.addRecognizedKey(Qt::Key_Left);
+
+    m_keyboardMouseHandler.addRecognizedKey(Qt::Key_Space);
+    m_keyboardMouseHandler.addRecognizedKey(Qt::Key_Shift);
+
     connect(&m_timer, &QTimer::timeout, this, [this]() {
         m_Drone->startPropellers();
-        renderLater();
-    });
-
-    connect(&m_timer_2, &QTimer::timeout, this, [this]() {
-        m_Drone->moveDrone();
         renderLater();
     });
 }
@@ -92,8 +96,6 @@ void SceneView::initializeGL() {
 		// Timer
 		m_gpuTimers.setSampleCount(3);
 		m_gpuTimers.create();
-
-
 	}
 	catch (OpenGLException & ex) {
 		throw OpenGLException(ex, "OpenGL initialization failed.", FUNC_ID);
@@ -171,14 +173,6 @@ void SceneView::paintGL() {
 
 	m_gpuTimers.recordSample(); // done painting
 
-
-#if 0
-	// do some animation stuff
-	m_transform.rotate(1.0f, QVector3D(0.0f, 0.1f, 0.0f));
-	updateWorld2ViewMatrix();
-	renderLater();
-#endif
-
 	checkInput();
 
 	QVector<GLuint64> intervals = m_gpuTimers.waitForIntervals();
@@ -254,6 +248,21 @@ void SceneView::checkInput() {
 		renderLater();
 		return;
 	}
+
+    if (m_keyboardMouseHandler.keyDown(Qt::Key_Up) ||
+        m_keyboardMouseHandler.keyDown(Qt::Key_Down) ||
+        m_keyboardMouseHandler.keyDown(Qt::Key_Right) ||
+        m_keyboardMouseHandler.keyDown(Qt::Key_Left) ||
+        m_keyboardMouseHandler.keyDown(Qt::Key_Space) ||
+        m_keyboardMouseHandler.keyDown(Qt::Key_Shift)
+        ) {
+        m_inputEventReceived = true;
+        renderLater();
+        return;
+    }
+
+
+
 }
 
 
@@ -285,10 +294,32 @@ void SceneView::processInput() {
 	int wheelDelta = m_keyboardMouseHandler.resetWheelDelta();
 	if (wheelDelta != 0) {
         float transSpeed = 20.0f;
-		if (m_keyboardMouseHandler.keyDown(Qt::Key_Shift))
-            transSpeed = 20.0f;
 		m_camera.translate(wheelDelta * transSpeed * m_camera.forward());
 	}
+
+    if (m_keyboardMouseHandler.keyDown(Qt::Key_Up)) {
+        m_Drone->moveForward();
+    }
+
+    if (m_keyboardMouseHandler.keyDown(Qt::Key_Down)) {
+        m_Drone->moveBackward();
+    }
+
+    if (m_keyboardMouseHandler.keyDown(Qt::Key_Right)) {
+        m_Drone->moveRight();
+    }
+
+    if (m_keyboardMouseHandler.keyDown(Qt::Key_Left)) {
+        m_Drone->moveLeft();
+    }
+
+    if (m_keyboardMouseHandler.keyDown(Qt::Key_Space)) {
+        m_Drone->moveUp();
+    }
+
+    if (m_keyboardMouseHandler.keyDown(Qt::Key_Shift)) {
+        m_Drone->moveDown();
+    }
 
 	// finally, reset "WasPressed" key states
 	m_keyboardMouseHandler.clearWasPressedKeyStates();
@@ -312,12 +343,4 @@ void SceneView::startParaller(bool connection){
         if (!m_timer.isActive())
             m_timer.start(0.5);
     else m_timer.stop();
-}
-
-void SceneView::startDrone(bool connection){
-    startParaller(connection);
-    if(connection)
-        if (!m_timer_2.isActive())
-            m_timer_2.start(16);
-        else m_timer_2.stop();
 }

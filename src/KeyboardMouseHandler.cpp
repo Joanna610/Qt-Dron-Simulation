@@ -25,10 +25,6 @@ KeyboardMouseHandler::KeyboardMouseHandler() :
 }
 
 
-KeyboardMouseHandler::~KeyboardMouseHandler() {
-}
-
-
 
 void KeyboardMouseHandler::keyPressEvent(QKeyEvent *event) {
 	if (event->isAutoRepeat()) {

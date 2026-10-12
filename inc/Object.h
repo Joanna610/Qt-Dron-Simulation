@@ -24,7 +24,7 @@ public:
     void drawObject();
     int initVertexBuffers();
     void setShaders(QOpenGLShaderProgram *shaderProgramm);
-    void translateObject();
+    void translateObject(const float& x, const float& y, const float& z);
     void rotateObject();
 
     QMatrix4x4 returnModelMatrix(){ return m_modelMatrix; }

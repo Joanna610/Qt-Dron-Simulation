@@ -162,7 +162,36 @@ void Drone::startPropellers() {
     }
 }
 
-void Drone::moveDrone(){
+void Drone::moveForward(){
     for(auto& object : m_objects)
-        object.second->translateObject();
+        object.second->translateObject(1.0, 0.0, 0.0);
 }
+
+void Drone::moveBackward(){
+    for(auto& object : m_objects)
+        object.second->translateObject(-1.0, 0.0, 0.0);
+}
+
+void Drone::moveRight(){
+    for(auto& object : m_objects)
+        object.second->translateObject(0.0, 0.0, 1.0);
+}
+
+void Drone::moveLeft(){
+    for(auto& object : m_objects)
+        object.second->translateObject(0.0, 0.0, -1.0);
+}
+
+void Drone::moveUp(){
+    for(auto& object : m_objects)
+        object.second->translateObject(0.0, 1.0, 0.0);
+}
+
+void Drone::moveDown(){
+    for(auto& object : m_objects)
+        object.second->translateObject(0.0, -1.0, 0.0);
+}
+
+
+
+
