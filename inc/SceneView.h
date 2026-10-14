@@ -16,6 +16,7 @@ License    : BSD License,
 #include <QOpenGLTimeMonitor>
 #include <QElapsedTimer>
 #include <QTimer>
+#include <QtConcurrent/QtConcurrent>
 
 #include "OpenGLWindow.h"
 #include "ShaderProgram.h"
@@ -46,6 +47,7 @@ protected:
 
 
 private:
+    QThread                     m_Thread;
 
     QTimer                      m_timer;
     QTimer                      m_timer_2;
