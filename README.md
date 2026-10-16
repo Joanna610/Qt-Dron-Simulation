@@ -1,3 +1,3 @@
 # Qt-Drone-Simulation
 
-Work in prograss
+<img src="drone.png" alt="screenshot" width="600"/>
