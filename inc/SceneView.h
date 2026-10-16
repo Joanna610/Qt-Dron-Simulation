@@ -25,13 +25,13 @@ License    : BSD License,
 #include "Camera.h"
 #include "Drone.h"
 
+
 class SceneView : public OpenGLWindow {
 public:
 	SceneView();
 	virtual ~SceneView() override;
 
     void startParaller(bool connection);
-
 protected:
 	void initializeGL() override;
 	void resizeGL(int width, int height) override;
@@ -45,12 +45,9 @@ protected:
 	void mouseMoveEvent(QMouseEvent *event) override;
 	void wheelEvent(QWheelEvent *event) override;
 
-
 private:
-    QThread                     m_Thread;
 
     QTimer                      m_timer;
-    QTimer                      m_timer_2;
 	/*! Tests, if any relevant input was received and registers a state change. */
 	void checkInput();
 
@@ -82,7 +79,6 @@ private:
 
 	QOpenGLTimeMonitor			m_gpuTimers;
 	QElapsedTimer				m_cpuTimer;
-
 };
 
 #endif // SCENEVIEW_H

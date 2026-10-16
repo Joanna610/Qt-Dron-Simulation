@@ -669,7 +669,9 @@ debug/Drone.o: ../../src/Drone.cpp ../../inc/Drone.h \
 		C:/Qt/6.7.0/mingw_64/include/QtCore/qobject.h \
 		C:/Qt/6.7.0/mingw_64/include/QtCore/qcoreevent.h \
 		C:/Qt/6.7.0/mingw_64/include/QtCore/qobject_impl.h \
-		C:/Qt/6.7.0/mingw_64/include/QtCore/qbindingstorage.h
+		C:/Qt/6.7.0/mingw_64/include/QtCore/qbindingstorage.h \
+		C:/Qt/6.7.0/mingw_64/include/QtCore/QElapsedTimer \
+		C:/Qt/6.7.0/mingw_64/include/QtCore/qelapsedtimer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\Drone.o ..\..\src\Drone.cpp
 
 debug/GridObject.o: ../../src/GridObject.cpp ../../inc/GridObject.h \
@@ -1118,6 +1120,8 @@ debug/Object.o: ../../src/Object.cpp ../../inc/Object.h \
 		C:/Qt/6.7.0/mingw_64/include/QtCore/qset.h \
 		C:/Qt/6.7.0/mingw_64/include/QtCore/qhash.h \
 		C:/Qt/6.7.0/mingw_64/include/QtCore/qvarlengtharray.h \
+		C:/Qt/6.7.0/mingw_64/include/QtCore/QElapsedTimer \
+		C:/Qt/6.7.0/mingw_64/include/QtCore/qelapsedtimer.h \
 		C:/Qt/6.7.0/mingw_64/include/QtOpenGL/QOpenGLShaderProgram \
 		C:/Qt/6.7.0/mingw_64/include/QtOpenGL/qopenglshaderprogram.h \
 		C:/Qt/6.7.0/mingw_64/include/QtGui/qvector2d.h

@@ -4,8 +4,7 @@
 #include <QOpenGLBuffer>
 #include <QOpenGLVertexArrayObject>
 #include <QMatrix4x4>
-
-
+#include <QElapsedTimer>
 
 QT_BEGIN_NAMESPACE
 class QOpenGLShaderProgram;
@@ -34,6 +33,7 @@ private:
     QVector3D                   m_position;
     QVector3D                   m_size;
     float                       m_rotationAngle = 0.0f;
+    float                       m_rotationSpeed = 16.0;
 
     QOpenGLVertexArrayObject    m_vao;
 
@@ -45,6 +45,8 @@ private:
 
 
     int                         m_amountOfVertices = 0;
+    QElapsedTimer               m_rotationTimer;
+
 };
 
 #endif // OBJECT_H

@@ -21,21 +21,22 @@ Object::Object(const QVector3D& size,
                const QVector3D& rotation) : m_position(position), m_size(size), m_rotationAngle(rotationAngle)
 {
     // Model transformation
-    this->m_modelMatrix.setToIdentity();
+    m_modelMatrix.setToIdentity();
 
     // The camera is quite far away, so make the cube large for testing.
-    this->m_modelMatrix.translate(m_position);
-    this->m_modelMatrix.rotate(m_rotationAngle, rotation);
-    this->m_modelMatrix.scale(m_size);
+    m_modelMatrix.translate(m_position);
+    m_modelMatrix.rotate(m_rotationAngle, rotation);
+    m_modelMatrix.scale(m_size);
 
     // Create Vertex Array Object
-    this->m_vao.create();
-    this->m_vao.bind();
+    m_vao.create();
+    m_vao.bind();
 
     // Create vertex, normal and index buffers
-    this->m_amountOfVertices = initVertexBuffers();
+    m_amountOfVertices = initVertexBuffers();
 
-    this->m_vao.release();
+    m_vao.release();
+    m_rotationTimer.start();
 }
 
 void Object::setShaders(QOpenGLShaderProgram *shaderProgramm){
@@ -269,7 +270,9 @@ int Object::initVertexBuffers()
 }
 
 void Object::rotateObject(){
-    m_rotationAngle += 1.0f; // increase angle (in degrees)
+    float deltaTime = m_rotationTimer.restart() / 1000.0f;
+
+    m_rotationAngle += m_rotationSpeed * 60.0f* deltaTime;
     if (m_rotationAngle >= 360.f) m_rotationAngle -= 360.f;
 
     m_modelMatrix.setToIdentity();
@@ -283,7 +286,6 @@ void Object::rotateObject(){
 
 
 void Object::translateObject(const float& x, const float& y, const float& z){
-
     m_position += QVector3D(x, y, z);
     m_modelMatrix.setToIdentity();
     m_modelMatrix.translate(m_position);

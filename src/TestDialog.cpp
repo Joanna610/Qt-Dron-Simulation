@@ -67,6 +67,7 @@ TestDialog::TestDialog() :
     QPushButton * startBtn = new QPushButton(tr("Start Drone"), this);
     connect(startBtn, &QPushButton::clicked, this, [this]() {
         m_sceneView->startParaller(true);
+        // m_sceneView->startThreads(true);
     });
 
 

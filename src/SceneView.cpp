@@ -58,9 +58,24 @@ SceneView::SceneView() :
         m_Drone->startPropellers();
         renderLater();
     });
+
+    // connect(&m_propellerThread, &PropellerThread::tick, this, [this]() {
+    //     m_Drone->startPropellers();
+    //     renderLater();
+    // });
+
+    // connect(&m_movementThread, &PropellerThread::tick, this, [this]() {
+    //     checkInput();
+    // });
 }
 
 SceneView::~SceneView() {
+    // if (m_propellerThread.isRunning())
+    // {
+    //     m_propellerThread.requestInterruption();
+    //     m_propellerThread.wait();
+    // }
+
 	if (m_context) {
 		m_context->makeCurrent(this);
 
@@ -102,7 +117,6 @@ void SceneView::initializeGL() {
 	}
 }
 
-
 void SceneView::resizeGL(int width, int height) {
 	// the projection matrix need to be updated only for window size changes
 	m_projection.setToIdentity();
@@ -118,7 +132,6 @@ void SceneView::resizeGL(int width, int height) {
 	// update cached world2view matrix
 	updateWorld2ViewMatrix();
 }
-
 
 void SceneView::paintGL() {
 	m_cpuTimer.start();
@@ -142,12 +155,12 @@ void SceneView::paintGL() {
 
 	// *** render grid ***
 
-	m_gpuTimers.recordSample(); // setup grid
+    m_gpuTimers.recordSample(); // setup grid
 	SHADER(0)->bind();
 	SHADER(0)->setUniformValue(m_shaderPrograms[0].m_uniformIDs[0], m_worldToView);
 	SHADER(0)->setUniformValue(m_shaderPrograms[0].m_uniformIDs[1], gridColor);
 
-	m_gpuTimers.recordSample(); // render grid
+    m_gpuTimers.recordSample(); // render grid
     m_gridObject->render();
 	SHADER(0)->release();
 
@@ -171,20 +184,19 @@ void SceneView::paintGL() {
 
     SHADER(1)->release();
 
-	m_gpuTimers.recordSample(); // done painting
+    m_gpuTimers.recordSample(); // done painting
 
 	checkInput();
 
-	QVector<GLuint64> intervals = m_gpuTimers.waitForIntervals();
-	for (GLuint64 it : intervals)
+    QVector<GLuint64> intervals = m_gpuTimers.waitForIntervals();
+    for (GLuint64 it : intervals)
         qDebug() << "  " << it*1e-6 << "ms/frame";
-	QVector<GLuint64> samples = m_gpuTimers.waitForSamples();
-	qDebug() << "Total render time: " << (samples.back() - samples.front())*1e-6 << "ms/frame";
+    QVector<GLuint64> samples = m_gpuTimers.waitForSamples();
+    qDebug() << "Total render time: " << (samples.back() - samples.front())*1e-6 << "ms/frame";
 
-	qint64 elapsedMs = m_cpuTimer.elapsed();
+    qint64 elapsedMs = m_cpuTimer.elapsed();
     qDebug() << "Total paintGL time: " << elapsedMs << "ms\n";
 }
-
 
 void SceneView::keyPressEvent(QKeyEvent *event) {
 	m_keyboardMouseHandler.keyPressEvent(event);
@@ -214,7 +226,6 @@ void SceneView::wheelEvent(QWheelEvent *event) {
 	m_keyboardMouseHandler.wheelEvent(event);
 	checkInput();
 }
-
 
 void SceneView::checkInput() {
 	// this function is called whenever _any_ key/mouse event was issued
@@ -260,11 +271,7 @@ void SceneView::checkInput() {
         renderLater();
         return;
     }
-
-
-
 }
-
 
 void SceneView::processInput() {
 	// function must only be called if an input event has been received
